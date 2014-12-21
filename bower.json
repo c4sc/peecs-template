@@ -1,0 +1,20 @@
+{
+  "name": "peecs",
+  "version": "0.0.0",
+  "authors": [
+    "Mohamed Rashid <rashivkp@gmail.com>"
+  ],
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.1",
+    "fontawesome": "~4.2.0"
+  }
+}

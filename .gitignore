@@ -1,0 +1,17 @@
+bower_components
+node_modules
+
+public/fonts/*
+!public/fonts/.gitkeep
+public/css/*
+!public/css/.gitkeep
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+### Sass ###
+.sass-cache
+*.css.map
