@@ -2,14 +2,14 @@
 
 Requerements
 ---
-bower
-node
-gulp
-ruby
-sass
+- ruby
+- sass
+- bower
+- node
+- gulp
 
 Installation
-
+---
 ```
 gem install sass
 npm install
