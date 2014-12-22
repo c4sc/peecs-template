@@ -1,11 +1,114 @@
-@import "variables"
-@import "bootstrap/mixins"
-@import "bootstrap/normalize"
+@import "custom_variables"
 @import "font-awesome"
+@import "box"
+body 
+    background: url('/img/bg.jpg') no-repeat center center fixed
+    background-size: cover
 
+.content 
+    height: auto
+    background-color: #ed425c
+
+footer 
+    height: auto
+    background-color: #8cb4b4
 h2
-  color: red
+    color: red
 
 h4 
-  border: solid #fff
+    border: solid #fff
 
+.navbar-inverse
+    .navbar-brand 
+        padding: 5px
+    .navbar-toggle
+        border-radius: 0
+    .navbar-nav
+        padding: 12px
+
+.btn, .form-control
+    border-radius: 0
+    background: transparent
+    color: #fff
+
+.form-control:focus 
+    border-color: #fff
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 255, 255, 0.6)
+
+.btn-default .glyphicon 
+    color: #fff
+
+.btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle 
+    background: transparent
+
+    .glyphicon
+        color: $yellow
+
+$header-hight: 500px
+
+header
+    height: $header-hight
+
+    .circle-login
+        margin-top: 200px
+
+        .circle 
+            margin: 0 auto
+            width: 100px
+            height: 100px
+            background: none
+            border: solid 5px
+            border-color: $yellow
+            border-radius: 50px
+
+            p.login 
+                text-align: center
+                color: #fff
+                font-weight: bold
+                margin-top: 36px
+            
+            p.login a
+                color: #fff
+                font-size: 16px
+
+// logo
+.logobox 
+    float: left
+
+    .square 
+        margin: 0 auto
+        background-color: #fff
+        height: 51px
+        width: 59px
+        border: solid #fff 3px
+
+    .rectangle-yellow 
+        margin-top: 8.47%
+        margin-left: 13.72%
+        float: left
+        width: 27%
+        height: 11.84%
+        background-color: #f6c531
+
+    .rectangle-1 
+        float: right
+        width: 40.67%
+        height: 33.3333%
+        background-color: #38c3d3
+
+    .rectangle-2 
+        margin-left: 30.5%
+        margin-top: 28%
+        width: 69.49%
+        height: 33.3333%
+        background-color: #3e919d
+
+    .rectangle-3 
+        width: 100%
+        height: 33.3333%
+        background-color: #22555d
+
+    .logotitle 
+        margin-left: -4px
+        margin-top: 3px
+        color: #ffffff

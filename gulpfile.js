@@ -2,7 +2,12 @@ var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     autoprefix = require('gulp-autoprefixer'),
     notify = require("gulp-notify"),
-    bower = require('gulp-bower');
+    bower = require('gulp-bower'),
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
+    http = require('http'),
+    st = require('st'),
+    livereload = require('gulp-livereload');
 
 var config = {
     sassPath: './resources/sass',
@@ -14,7 +19,8 @@ gulp.task('bower', function() {
 });
 
 gulp.task('icons', function() {
-    return gulp.src(config.bowerDir + '/fontawesome/fonts/**.*').pipe(gulp.dest('./public/fonts'));
+    gulp.src(config.bowerDir + '/fontawesome/fonts/**.*').pipe(gulp.dest('./public/fonts'));
+    return gulp.src(config.bowerDir + '/bootstrap-sass-official/assets/fonts/bootstrap/**.*').pipe(gulp.dest('./public/fonts/bootstrap'));
 });
 
 gulp.task('css', function() {
@@ -34,11 +40,33 @@ gulp.task('css', function() {
             }))
         )
         .pipe(autoprefix('last 2 version'))
-        .pipe(gulp.dest('./public/css'));
+        .pipe(gulp.dest('./public/css'))
+        .pipe(livereload());
 });
 
-gulp.task('watch', function() {
-    gulp.watch(config.sassPath + '/**/*.sass', ['css']);
+gulp.task('compress', function() {
+    /*
+    gulp.src(config.bowerDir + '/bootstrap-sass-official/assets/javascripts/bootstrap.js')
+            */
+    gulp.src([
+            config.bowerDir + '/jquery/dist/jquery.js',
+            config.bowerDir + '/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+            config.bowerDir + '/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js'
+        ])
+        .pipe(concat('script.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/js'));
 });
 
-gulp.task('default', ['bower', 'icons', 'css']);
+gulp.task('watch', ['server'], function() {
+    livereload.listen({ basePath: 'public' });
+    gulp.watch([config.sassPath + '/**/*.scss', config.sassPath + '/**/*.sass'], ['css']);
+});
+
+gulp.task('server', function(done) {
+    http.createServer(
+        st({ path: __dirname + '/public', index: 'index.html', cache: false })
+    ).listen(9000, done);
+});
+
+gulp.task('default', ['bower', 'icons', 'css', 'compress']);
