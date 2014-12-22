@@ -5,9 +5,8 @@ var gulp = require('gulp'),
     bower = require('gulp-bower'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
-    http = require('http'),
-    st = require('st'),
-    livereload = require('gulp-livereload');
+    browserSync = require('browser-sync'),
+    reload = browserSync.reload;
 
 var config = {
     sassPath: './resources/sass',
@@ -41,13 +40,12 @@ gulp.task('css', function() {
         )
         .pipe(autoprefix('last 2 version'))
         .pipe(gulp.dest('./public/css'))
-        .pipe(livereload());
+        .pipe(reload({
+            stream: true
+        }));
 });
 
 gulp.task('compress', function() {
-    /*
-    gulp.src(config.bowerDir + '/bootstrap-sass-official/assets/javascripts/bootstrap.js')
-            */
     gulp.src([
             config.bowerDir + '/jquery/dist/jquery.js',
             config.bowerDir + '/bootstrap-sass-official/assets/javascripts/bootstrap.js',
@@ -58,15 +56,21 @@ gulp.task('compress', function() {
         .pipe(gulp.dest('./public/js'));
 });
 
-gulp.task('watch', ['server'], function() {
-    livereload.listen({ basePath: 'public' });
+
+gulp.task('browser-sync', function() {
+    browserSync({
+        server: {
+            baseDir: "./public"
+        }
+    });
+});
+
+// reload all browsers
+gulp.task('bs-reload', function() {
+    browserSync.reload();
+});
+
+gulp.task('default', ['bower', 'icons', 'css', 'compress', 'browser-sync'], function() {
     gulp.watch([config.sassPath + '/**/*.scss', config.sassPath + '/**/*.sass'], ['css']);
+    gulp.watch('./public/*.html',['bs-reload']);
 });
-
-gulp.task('server', function(done) {
-    http.createServer(
-        st({ path: __dirname + '/public', index: 'index.html', cache: false })
-    ).listen(9000, done);
-});
-
-gulp.task('default', ['bower', 'icons', 'css', 'compress']);
